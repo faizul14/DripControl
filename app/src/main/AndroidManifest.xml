@@ -15,7 +15,7 @@
             android:name=".presentation.tracking.TrackingScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity2"
             android:exported="false"
             android:label="@string/title_activity_main2" />
         <activity
@@ -25,10 +25,11 @@
             android:name=".presentation.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".SplashScreenActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

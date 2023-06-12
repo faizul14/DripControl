@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/robot_regular"
-        android:text="SSign Up"
+        android:text="Sign Up"
         android:textColor="@color/color1"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
