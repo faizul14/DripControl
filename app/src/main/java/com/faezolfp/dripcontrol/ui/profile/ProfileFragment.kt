@@ -1,4 +1,4 @@
-package com.faezolfp.dripcontrol.presentation.profile
+package com.faezolfp.dripcontrol.ui.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
