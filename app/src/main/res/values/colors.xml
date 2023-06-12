@@ -14,4 +14,13 @@
     <color name="color4">#C5EBF2</color>
     <color name="color5">#098282</color>
     <color name="color6">#455255</color>
+    <color name="color7">#6BDBE2</color>
+
+    <color name="colorshape1">#FF5D7D</color>
+    <color name="colorshape2">#61A3D8</color>
+    <color name="colorshape3">#E9EA53</color>
+    <color name="colorshape4">#49D8B3</color>
+
+    <color name="colorstart">#4A5CFF</color>
+    <color name="colorend">#0094FF</color>
 </resources>
