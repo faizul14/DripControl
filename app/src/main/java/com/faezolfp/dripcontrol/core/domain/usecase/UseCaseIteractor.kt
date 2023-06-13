@@ -8,4 +8,12 @@ class UseCaseIteractor(private val repository: IRepository): UseCase {
     override fun isLogin(): LiveData<Boolean> {
        return repository.isLogin()
     }
+
+    override suspend fun login(status: Boolean) {
+        repository.login(status)
+    }
+
+    override suspend fun logout(status: Boolean) {
+        repository.logout(status)
+    }
 }

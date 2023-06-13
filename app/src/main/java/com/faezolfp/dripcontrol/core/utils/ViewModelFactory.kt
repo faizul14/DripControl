@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.SplashViewModel
 import com.faezolfp.dripcontrol.core.di.Injection
 import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
+import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
+import com.faezolfp.dripcontrol.ui.profile.ProfileViewModel
 
 class ViewModelFactory private constructor(private val useCase: UseCase) : ViewModelProvider.NewInstanceFactory() {
     companion object {
@@ -31,6 +33,12 @@ class ViewModelFactory private constructor(private val useCase: UseCase) : ViewM
 //        }
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(useCase) as T
+        }
+        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            return LoginViewModel(useCase) as T
+        }
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(useCase) as T
         }
 
         throw IllegalArgumentException("Message ${modelClass.name}")

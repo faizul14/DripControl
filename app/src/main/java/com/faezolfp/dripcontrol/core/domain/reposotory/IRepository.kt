@@ -4,4 +4,7 @@ import androidx.lifecycle.LiveData
 
 interface IRepository {
     fun isLogin(): LiveData<Boolean>
+
+    suspend fun login(status: Boolean)
+    suspend fun logout(status: Boolean)
 }
