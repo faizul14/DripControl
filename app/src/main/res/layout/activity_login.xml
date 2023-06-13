@@ -76,6 +76,7 @@
         android:background="@drawable/img_splashscreen"
         android:fontFamily="@font/robot_regular"
         android:hint="Enter your email"
+        android:inputType="textEmailAddress"
         android:padding="16dp"
         android:paddingLeft="50dp"
         android:textColorHint="#8F8F8F"

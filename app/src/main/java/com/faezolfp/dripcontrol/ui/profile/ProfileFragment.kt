@@ -11,6 +11,7 @@ import com.faezolfp.dripcontrol.MainActivity2
 import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.FragmentProfileBinding
+import com.faezolfp.dripcontrol.presentation.editprofile.EditProfileActivity
 import com.faezolfp.dripcontrol.presentation.login.LoginActivity
 
 
@@ -42,6 +43,10 @@ class ProfileFragment : Fragment(){
             viewModel.logout()
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             requireActivity().finish()
+        }
+
+        binding.editProfile.setOnClickListener{
+            startActivity(Intent(requireActivity(), EditProfileActivity::class.java))
         }
     }
 
