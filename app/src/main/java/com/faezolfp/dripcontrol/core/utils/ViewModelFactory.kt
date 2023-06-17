@@ -7,6 +7,7 @@ import com.faezolfp.dripcontrol.SplashViewModel
 import com.faezolfp.dripcontrol.core.di.Injection
 import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
 import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
+import com.faezolfp.dripcontrol.presentation.tracking.TrackingViewModel
 import com.faezolfp.dripcontrol.ui.profile.ProfileViewModel
 
 class ViewModelFactory private constructor(private val useCase: UseCase) : ViewModelProvider.NewInstanceFactory() {
@@ -39,6 +40,9 @@ class ViewModelFactory private constructor(private val useCase: UseCase) : ViewM
         }
         if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(useCase) as T
+        }
+        if (modelClass.isAssignableFrom(TrackingViewModel::class.java)) {
+            return TrackingViewModel(useCase) as T
         }
 
         throw IllegalArgumentException("Message ${modelClass.name}")
