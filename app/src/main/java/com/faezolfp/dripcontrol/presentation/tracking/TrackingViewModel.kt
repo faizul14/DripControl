@@ -10,7 +10,8 @@ class TrackingViewModel(private val useCase: UseCase): ViewModel() {
     val dataTpm : LiveData<Int> = _dataTpm
 
     fun setDataTpm(isValue: Int){
-        _dataTpm.value = isValue
-
+        useCase.setDataTpm(isValue)
     }
+
+    val getDataTpm = useCase.getDataTpm()
 }

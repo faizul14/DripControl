@@ -8,4 +8,7 @@ interface UseCase {
     suspend fun login(status: Boolean)
 
     suspend fun logout(status: Boolean)
+
+    fun setDataTpm(data: Int)
+    fun getDataTpm(): LiveData<Int>
 }

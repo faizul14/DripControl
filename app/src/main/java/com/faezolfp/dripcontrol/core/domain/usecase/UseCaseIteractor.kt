@@ -16,4 +16,12 @@ class UseCaseIteractor(private val repository: IRepository): UseCase {
     override suspend fun logout(status: Boolean) {
         repository.logout(status)
     }
+
+    override fun setDataTpm(data: Int) {
+        repository.setDataTpm(data)
+    }
+
+    override fun getDataTpm(): LiveData<Int> {
+        return repository.getDataTpm()
+    }
 }

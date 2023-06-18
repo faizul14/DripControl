@@ -59,10 +59,10 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun displayObserveViewModel() {
-        viewModel.dataTpm.observe(this) { data ->
+        viewModel.getDataTpm.observe(this) { data ->
             if (data != null) {
-                dataSave = data
-                binding.buttonMinus.isEnabled = data != 0
+                dataSave = data.toInt()
+                binding.buttonMinus.isEnabled = data.toInt() != 0
                 binding.progressBar1.progress = data.toInt()
                 binding.txtTpm.text = "$data\nTPM"
             } else {
