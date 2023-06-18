@@ -34,7 +34,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDisplay() {
         displayButton()
         displayObserveViewModel()
-        showNotification()
+//        showNotification()
     }
 
 
