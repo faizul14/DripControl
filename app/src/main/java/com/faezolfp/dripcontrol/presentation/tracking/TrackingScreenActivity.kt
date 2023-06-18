@@ -1,9 +1,15 @@
 package com.faezolfp.dripcontrol.presentation.tracking
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
@@ -28,6 +34,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDisplay() {
         displayButton()
         displayObserveViewModel()
+        showNotification()
     }
 
 
@@ -47,10 +54,10 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.buttonMinus -> {
-                if (dataSave > 0){
+                if (dataSave > 0) {
                     dataSave -= 10
                     viewModel.setDataTpm(dataSave)
-                }else{
+                } else {
                     Toast.makeText(this, "Batas Minimum", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -70,6 +77,44 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+//    private fun showNotification() {
+//
+//        val mNotificationManager =
+//            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        val mBuilder = NotificationCompat.Builder(this, CHANEL_ID)
+//            .setSmallIcon(R.drawable.baseline_notifications_24).setLargeIcon(
+//                BitmapFactory.decodeResource(
+//                    resources,
+//                    R.drawable.baseline_notification_important_24
+//                )
+//            ).setContentTitle("Content Tittle")
+//            .setContentText("Contet text")
+//            .setSubText("Sub Text")
+//            .setAutoCancel(true)
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            /* Create or update. */
+//            val channel = NotificationChannel(
+//                CHANEL_ID,
+//                CHANNEL_NAME,
+//                NotificationManager.IMPORTANCE_DEFAULT
+//            )
+//            channel.description = CHANNEL_NAME
+//            mBuilder.setChannelId(CHANEL_ID)
+//            mNotificationManager.createNotificationChannel(channel)
+//        }
+//
+//        val notification = mBuilder.build()
+//
+//        mNotificationManager.notify(NOTIFICATION_ID, notification)
+//    }
+//
+//    companion object {
+//        const val CHANEL_ID = "chanel01"
+//        private const val NOTIFICATION_ID = 1
+//        private const val CHANNEL_NAME = "dicoding channel"
+//    }
 
 
 }
