@@ -42,11 +42,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val passwordConfirmationStream =
-            Observable.merge(RxTextView.textChanges(binding.edtPass).map { password ->
-                password.toString() != binding.edtCompass.text.toString()
-            }, RxTextView.textChanges(binding.edtCompass).map { confirmPassword ->
-                confirmPassword.toString() != binding.edtPass.text.toString()
-            })
+            Observable.merge(
+                RxTextView.textChanges(binding.edtPass).map { password ->
+                    password.toString() != binding.edtCompass.text.toString()
+                },
+                RxTextView.textChanges(binding.edtCompass).map { confirmPassword ->
+                    confirmPassword.toString() != binding.edtPass.text.toString()
+                }
+            )
         val subscribe = passwordConfirmationStream.subscribe {
             edtPassConfirmAllert(it)
         }

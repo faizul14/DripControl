@@ -24,7 +24,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.hide()
 
         val factory = ViewModelFactory.getInstance(application)
-        viewModel = ViewModelProvider(this, factory).get(TrackingViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory)[TrackingViewModel::class.java]
 
         setDisplay()
     }
@@ -34,7 +34,6 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
         displayObserveViewModel()
 //        showNotification()
     }
-
 
     private fun displayButton() {
         binding.buttonMinus.setOnClickListener(this)
@@ -59,14 +58,12 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Batas Minimum", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 
     private fun displayObserveViewModel() {
-
-        viewModel.getDataInfusMax.observe(this){data ->
-            if (data != null){
+        viewModel.getDataInfusMax.observe(this) { data ->
+            if (data != null) {
                 dataInpustMax = data.toInt()
                 Log.d("TRACKING", dataInpustMax.toString())
             }
@@ -83,8 +80,6 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-
-
         viewModel.getDataInfus.observe(this) { data ->
             if (data != null) {
                 binding.progressBar2.apply {
@@ -94,11 +89,11 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 dataInpusRealtime = data.toInt()
                 Log.d("TRACKING", "$dataInpustMax $dataInpusRealtime")
 
-                val persentase = FormatPersentase.persentaseRealtime(dataInpustMax, dataInpusRealtime)
-                binding.txtDtinfuspersen.text = "${persentase.toString()}%"
+                val persentase =
+                    FormatPersentase.persentaseRealtime(dataInpustMax, dataInpusRealtime)
+                binding.txtDtinfuspersen.text = "$persentase%"
             }
         }
-
     }
 
 //    private fun showNotification() {
@@ -138,6 +133,4 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
 //        private const val NOTIFICATION_ID = 1
 //        private const val CHANNEL_NAME = "dicoding channel"
 //    }
-
-
 }

@@ -11,14 +11,14 @@ import com.faezolfp.dripcontrol.core.domain.usecase.UseCaseIteractor
 
 object Injection {
 
-    private fun provideRepostitory(application: Application): IRepository {
+    private fun provideRepository(application: Application): IRepository {
         val prev = SettingPreferences.getInstance(application.dataStore)
-        val fiebase = Firebase.getInstance()
-        return Repository.getInstance(prev, firebase = fiebase)
+        val firebase = Firebase.getInstance()
+        return Repository.getInstance(prev, firebase = firebase)
     }
 
     fun provideUseCase(application: Application): UseCase {
-        val repository = provideRepostitory(application)
+        val repository = provideRepository(application)
         return UseCaseIteractor(repository)
     }
 }

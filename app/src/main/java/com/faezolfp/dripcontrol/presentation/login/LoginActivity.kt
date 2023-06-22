@@ -26,24 +26,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         displayBUtton()
 
-        val emailStream = RxTextView.textChanges(binding.edtEmail)
-            .skipInitialValue()
-            .map { email ->
-                !Patterns.EMAIL_ADDRESS.matcher(email).matches()
-            }
+        val emailStream = RxTextView.textChanges(binding.edtEmail).skipInitialValue().map { email ->
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
         emailStream.subscribe {
             edtEmailAllert(it)
         }
-        val passtream = RxTextView.textChanges(binding.edtPass)
-            .skipInitialValue()
-            .map { password ->
-                password.length < 6
-            }
+        val passtream = RxTextView.textChanges(binding.edtPass).skipInitialValue().map { password ->
+            password.length < 6
+        }
         passtream.subscribe {
             edtPassAllert(it)
         }
-
-
     }
 
     private fun displayBUtton() {
@@ -64,7 +58,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
     private fun edtEmailAllert(isNotValid: Boolean) {
         binding.edtEmail.error = if (isNotValid) "Email tidak valid" else null
     }
@@ -72,6 +65,4 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun edtPassAllert(isNotValid: Boolean) {
         binding.edtPass.error = if (isNotValid) "Password kurang dari 6 karakter!" else null
     }
-
-
 }
