@@ -1,17 +1,13 @@
 package com.faezolfp.dripcontrol.presentation.tracking
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
+import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityTrackingScreenBinding
 
@@ -19,6 +15,8 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityTrackingScreenBinding
     private lateinit var viewModel: TrackingViewModel
     private var dataSave = 0
+    private var dataInpustMax = 0
+    private var dataInpusRealtime = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTrackingScreenBinding.inflate(layoutInflater)
@@ -76,6 +74,28 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 dataSave = 0
             }
         }
+
+        viewModel.getDataInfusMax.observe(this){data ->
+            if (data != null){
+                dataInpustMax = data.toInt()
+                Log.d("TRACKING", dataInpustMax.toString())
+            }
+        }
+
+        viewModel.getDataInfus.observe(this) { data ->
+            if (data != null) {
+                binding.progressBar2.apply {
+                    max = dataInpustMax
+                    progress = data.toInt()
+                }
+                dataInpusRealtime = data.toInt()
+                Log.d("TRACKING", "$dataInpustMax $dataInpusRealtime")
+
+                val persentase = FormatPersentase.persentaseRealtime(dataInpustMax, dataInpusRealtime)
+                binding.txtDtinfuspersen.text = "${persentase.toString()}%"
+            }
+        }
+
     }
 
 //    private fun showNotification() {

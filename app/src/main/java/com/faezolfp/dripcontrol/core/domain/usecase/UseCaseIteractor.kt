@@ -24,4 +24,20 @@ class UseCaseIteractor(private val repository: IRepository): UseCase {
     override fun getDataTpm(): LiveData<Int> {
         return repository.getDataTpm()
     }
+
+    override fun setDataInfus(data: Int) {
+        repository.setDataInfus(data)
+    }
+
+    override fun getDataInfus(): LiveData<Int> {
+        return repository.getDataInfus()
+    }
+
+    override fun setDataInfusMax(data: Int) {
+        repository.setDataInfusMax(data)
+    }
+
+    override fun getDataInfusMax(): LiveData<Int> {
+        return repository.getDataInfusMax()
+    }
 }

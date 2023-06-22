@@ -9,4 +9,10 @@ interface IRepository {
     suspend fun logout(status: Boolean)
     fun setDataTpm(data: Int)
     fun getDataTpm(): LiveData<Int>
+    fun setDataInfus(data: Int)
+    fun getDataInfus(): LiveData<Int>
+    fun setDataInfusMax(data: Int)
+    fun getDataInfusMax(): LiveData<Int>
+
+
 }

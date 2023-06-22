@@ -27,6 +27,22 @@ class Repository(private val preferences: SettingPreferences, private val dataFi
         return dataFirebase.getTpm()
     }
 
+    override fun setDataInfus(data: Int) {
+        dataFirebase.setDataInfus(data)
+    }
+
+    override fun getDataInfus(): LiveData<Int> {
+        return dataFirebase.getDataInfus()
+    }
+
+    override fun setDataInfusMax(data: Int) {
+        dataFirebase.setDataInfusMax(data)
+    }
+
+    override fun getDataInfusMax(): LiveData<Int> {
+        return dataFirebase.getDataInfusMax()
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null

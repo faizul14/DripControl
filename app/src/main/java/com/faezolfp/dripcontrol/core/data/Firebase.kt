@@ -39,6 +39,61 @@ class Firebase {
         return result
     }
 
+    fun setDataInfus(data: Int) {
+        database.child("Testesan/DataRealtime").setValue(data).addOnSuccessListener {
+
+        }.addOnFailureListener {
+
+        }
+    }
+
+    fun getDataInfus(): LiveData<Int> {
+        var result = MutableLiveData<Int>()
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataInf = snapshot.child("Testesan/DataRealtime").value
+                result.value = dataInf.toString().toInt()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.addValueEventListener(listener)
+
+        return result
+    }
+    fun setDataInfusMax(data: Int) {
+        database.child("Testesan/Max").setValue(data).addOnSuccessListener {
+
+        }.addOnFailureListener {
+
+        }
+    }
+
+    fun getDataInfusMax(): LiveData<Int> {
+        var result = MutableLiveData<Int>()
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataInf = snapshot.child("Testesan/Max").value
+                result.value = dataInf.toString().toInt()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        database.addValueEventListener(listener)
+
+        return result
+    }
+
     companion object {
         private var INSTANCE: Firebase? = null
 
