@@ -12,7 +12,6 @@ import com.faezolfp.dripcontrol.core.domain.usecase.UseCaseIteractor
 object Injection {
 
     private fun provideRepostitory(application: Application): IRepository {
-//        val remote = RemoteDataSource.getInstance(ApiConfig.provideApiService())
         val prev = SettingPreferences.getInstance(application.dataStore)
         val fiebase = Firebase.getInstance()
         return Repository.getInstance(prev, firebase = fiebase)

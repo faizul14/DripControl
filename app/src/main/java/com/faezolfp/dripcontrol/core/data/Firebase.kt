@@ -1,5 +1,6 @@
 package com.faezolfp.dripcontrol.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.*
@@ -15,7 +16,7 @@ class Firebase {
         database.child("BeratInfus").setValue(data).addOnSuccessListener {
 
         }.addOnFailureListener {
-
+            Log.d("RESULTFIREBASE", it.toString())
         }
     }
 
@@ -29,7 +30,7 @@ class Firebase {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("RESULTFIREBASE", error.toString())
             }
 
         }
@@ -43,7 +44,7 @@ class Firebase {
         database.child("Testesan/DataRealtime").setValue(data).addOnSuccessListener {
 
         }.addOnFailureListener {
-
+            Log.d("RESULTFIREBASE", it.toString())
         }
     }
 
@@ -57,7 +58,7 @@ class Firebase {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("RESULTFIREBASE", error.toString())
             }
 
         }
@@ -66,11 +67,12 @@ class Firebase {
 
         return result
     }
+
     fun setDataInfusMax(data: Int) {
         database.child("Testesan/Max").setValue(data).addOnSuccessListener {
 
         }.addOnFailureListener {
-
+            Log.d("RESULTFIREBASE", it.toString())
         }
     }
 
@@ -80,11 +82,13 @@ class Firebase {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val dataInf = snapshot.child("Testesan/Max").value
                 result.value = dataInf.toString().toInt()
+                Log.d("TRACKING", dataInf.toString())
+
 
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.d("RESULTFIREBASE", error.toString())
             }
 
         }

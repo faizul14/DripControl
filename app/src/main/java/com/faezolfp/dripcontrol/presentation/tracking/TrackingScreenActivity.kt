@@ -64,6 +64,14 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun displayObserveViewModel() {
+
+        viewModel.getDataInfusMax.observe(this){data ->
+            if (data != null){
+                dataInpustMax = data.toInt()
+                Log.d("TRACKING", dataInpustMax.toString())
+            }
+        }
+
         viewModel.getDataTpm.observe(this) { data ->
             if (data != null) {
                 dataSave = data.toInt()
@@ -75,12 +83,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        viewModel.getDataInfusMax.observe(this){data ->
-            if (data != null){
-                dataInpustMax = data.toInt()
-                Log.d("TRACKING", dataInpustMax.toString())
-            }
-        }
+
 
         viewModel.getDataInfus.observe(this) { data ->
             if (data != null) {
