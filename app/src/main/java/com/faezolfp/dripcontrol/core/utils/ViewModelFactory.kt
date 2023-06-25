@@ -23,15 +23,6 @@ class ViewModelFactory private constructor(private val useCase: UseCase) : ViewM
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(ListTerkiniViewModel::class.java)) {
-//            return ListTerkiniViewModel(useCase) as T
-//        }
-//        if (modelClass.isAssignableFrom(ListDirasakanViewModel::class.java)) {
-//            return ListDirasakanViewModel(useCase) as T
-//        }
-//        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-//            return HomeViewModel(useCase) as T
-//        }
         if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
             return SplashViewModel(useCase) as T
         }
@@ -44,8 +35,7 @@ class ViewModelFactory private constructor(private val useCase: UseCase) : ViewM
         if (modelClass.isAssignableFrom(TrackingViewModel::class.java)) {
             return TrackingViewModel(useCase) as T
         }
-
         throw IllegalArgumentException("Message ${modelClass.name}")
-
     }
 }
+

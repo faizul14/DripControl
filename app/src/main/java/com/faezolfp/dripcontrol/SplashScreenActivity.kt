@@ -1,9 +1,9 @@
 package com.faezolfp.dripcontrol
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
@@ -23,10 +23,10 @@ class SplashScreenActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, factory).get(SplashViewModel::class.java)
 
         Handler().postDelayed({
-            viewModel.getIsLogin.observe(this){data->
-                if (data){
+            viewModel.getIsLogin.observe(this) { data ->
+                if (data) {
                     startActivity(Intent(this, MainActivity2::class.java))
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -35,9 +35,8 @@ class SplashScreenActivity : AppCompatActivity() {
         }, 5000)
     }
 
-    fun destination(){
+    fun destination() {
         lifecycleScope.launchWhenStarted {
-
         }
     }
 }
