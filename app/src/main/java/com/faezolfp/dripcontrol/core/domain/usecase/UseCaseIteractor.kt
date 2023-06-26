@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.domain.reposotory.IRepository
 
 class UseCaseIteractor(private val repository: IRepository) : UseCase {
@@ -38,5 +39,9 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override fun getDataInfusMax(): LiveData<Int> {
         return repository.getDataInfusMax()
+    }
+
+    override fun registerUse(user: Users) {
+        repository.registerUse(user)
     }
 }

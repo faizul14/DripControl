@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Users
 
 interface UseCase {
     fun isLogin(): LiveData<Boolean>
@@ -12,4 +13,5 @@ interface UseCase {
     fun getDataInfus(): LiveData<Int>
     fun setDataInfusMax(data: Int)
     fun getDataInfusMax(): LiveData<Int>
+    fun registerUse(user: Users)
 }

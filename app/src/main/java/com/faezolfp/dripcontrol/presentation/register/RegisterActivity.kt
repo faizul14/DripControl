@@ -3,19 +3,29 @@ package com.faezolfp.dripcontrol.presentation.register
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
+import com.faezolfp.dripcontrol.core.domain.model.Users
+import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityRegisterBinding
+import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var viewModel: RegisterViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
+
+        val factory = ViewModelFactory.getInstance(application)
+        viewModel = ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
+
 
         displayButton()
         displayValidasi()
@@ -74,6 +84,34 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 //        }
     }
 
+    private fun register(){
+        var username: String? = null
+        var fulname: String? = null
+        var email: String? = null
+        var password: String? = null
+
+        binding.apply {
+            username = edtName.text.toString()
+            fulname = edtName.text.toString()
+            email = edtEmail.text.toString()
+            password = edtPass.text.toString()
+        }
+
+        if (username != null && fulname != null && email != null && password != null){
+            val data = Users(
+                username = username,
+                fullname = fulname,
+                email = email,
+                pasword = password
+            )
+            viewModel.register(data)
+            Toast.makeText(this, "Register Berhasil!!", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            Toast.makeText(this, "Register Gagal!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun edtNameAllert(isNotValid: Boolean) {
         binding.edtName.error = if (isNotValid) "Nama masih kosong!" else null
     }
@@ -92,12 +130,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun displayButton() {
         binding.txtLogin.setOnClickListener(this)
+        binding.btnRegister.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.txt_login -> {
                 finish()
+            }
+            R.id.btn_register -> {
+                register()
             }
         }
     }
