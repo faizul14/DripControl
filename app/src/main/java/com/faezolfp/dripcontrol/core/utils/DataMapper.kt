@@ -14,4 +14,14 @@ object DataMapper {
 
         return data
     }
+    fun dataMapFromEntityToModel(users: UserEntity): Users {
+        val data = Users(
+            username = users.username ?: null,
+            fullname = users.fulname ?: null,
+            email = users.email ?: null,
+            pasword = users.password ?: null
+        )
+
+        return data
+    }
 }

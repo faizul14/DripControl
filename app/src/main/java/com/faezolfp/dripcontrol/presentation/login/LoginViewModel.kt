@@ -11,4 +11,6 @@ class LoginViewModel(private val useCase: UseCase) : ViewModel() {
             useCase.login(true)
         }
     }
+
+    fun login(email: String, password: String) = useCase.loginUser(email, password)
 }

@@ -5,14 +5,15 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityRegisterBinding
-import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
+import io.reactivex.functions.Function3
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityRegisterBinding
@@ -26,10 +27,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val factory = ViewModelFactory.getInstance(application)
         viewModel = ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
 
-
         displayButton()
         displayValidasi()
+
     }
+
 
     private fun displayValidasi() {
         val nameStream = RxTextView.textChanges(binding.edtName).skipInitialValue().map { name ->
@@ -52,39 +54,41 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val passwordConfirmationStream =
-            Observable.merge(
-                RxTextView.textChanges(binding.edtPass).map { password ->
-                    password.toString() != binding.edtCompass.text.toString()
-                },
-                RxTextView.textChanges(binding.edtCompass).map { confirmPassword ->
-                    confirmPassword.toString() != binding.edtPass.text.toString()
-                }
-            )
-        val subscribe = passwordConfirmationStream.subscribe {
+            Observable.merge(RxTextView.textChanges(binding.edtPass).map { password ->
+                password.toString() != binding.edtCompass.text.toString()
+            }, RxTextView.textChanges(binding.edtCompass).map { confirmPassword ->
+                confirmPassword.toString() != binding.edtPass.text.toString()
+            })
+        passwordConfirmationStream.subscribe {
             edtPassConfirmAllert(it)
         }
 
-//        val invalidFieldsStream = Observable.combineLatest(
-//            emailStream,
-//            passtream,
-//            passwordConfirmationStream,
-//            Function3 { emailInvalid: Boolean, passwordInvalid: Boolean, passwordConfirmationInvalid: Boolean ->
-//                !emailInvalid && !passwordInvalid && !passwordConfirmationInvalid
-//            }
-//        )
-//
-//        invalidFieldsStream.subscribe { isValid ->
-//            if (isValid) {
-//                binding.btnRegister.isEnabled = true
-//                binding.btnRegister.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_500))
-//            } else {
-//                binding.btnRegister.isEnabled = false
-//                binding.btnRegister.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
-//            }
-//        }
+        val invalidFieldsStream = Observable.combineLatest(emailStream,
+            passtream,
+            passwordConfirmationStream,
+            Function3 { emailInvalid: Boolean, passwordInvalid: Boolean, passwordConfirmationInvalid: Boolean ->
+                !emailInvalid && !passwordInvalid && !passwordConfirmationInvalid
+            })
+        invalidFieldsStream.subscribe { isValid ->
+            if (isValid) {
+                binding.btnRegister.isEnabled = true
+                binding.btnRegister.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.btn_reg_log
+                    )
+                )
+            } else {
+                binding.btnRegister.isEnabled = false
+                binding.btnRegister.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.btn_reg_log_disabled
+                    )
+                )
+            }
+        }
     }
 
-    private fun register(){
+    private fun register() {
         var username: String? = null
         var fulname: String? = null
         var email: String? = null
@@ -97,17 +101,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             password = edtPass.text.toString()
         }
 
-        if (username != null && fulname != null && email != null && password != null){
+        if (username != null && fulname != null && email != null && password != null) {
             val data = Users(
-                username = username,
-                fullname = fulname,
-                email = email,
-                pasword = password
+                username = username, fullname = fulname, email = email, pasword = password
             )
             viewModel.register(data)
             Toast.makeText(this, "Register Berhasil!!", Toast.LENGTH_SHORT).show()
             finish()
-        }else{
+        } else {
             Toast.makeText(this, "Register Gagal!", Toast.LENGTH_SHORT).show()
         }
     }

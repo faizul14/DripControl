@@ -13,4 +13,7 @@ interface UserDao {
 
     @Query("SELECT username from UserEntity")
     fun getUsername(): LiveData<String>
+
+    @Query("SELECT id FROM UserEntity WHERE email = :email AND password = :password")
+    fun login(email: String, password: String): LiveData<Int>
 }
