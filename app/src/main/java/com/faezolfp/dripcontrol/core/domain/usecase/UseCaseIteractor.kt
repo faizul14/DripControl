@@ -13,6 +13,14 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
         repository.login(status)
     }
 
+    override fun isIDUser(): LiveData<Int> {
+        return repository.isIDUser()
+    }
+
+    override suspend fun saveIdUser(idUser: Int) {
+        repository.saveIdUser(idUser)
+    }
+
     override suspend fun logout(status: Boolean) {
         repository.logout(status)
     }
@@ -47,5 +55,9 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override fun loginUser(email: String, password: String): LiveData<Int> {
         return repository.loginUser(email, password)
+    }
+
+    override fun getUsernameById(UserId: Int): LiveData<String> {
+        return repository.getUsernameById(UserId)
     }
 }

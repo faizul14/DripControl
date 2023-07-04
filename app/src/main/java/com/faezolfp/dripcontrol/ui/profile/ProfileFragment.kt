@@ -38,6 +38,7 @@ class ProfileFragment : Fragment() {
     private fun displayButton() {
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
+            viewModel.saveIdUser(0)
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             requireActivity().finish()
         }

@@ -1,5 +1,6 @@
 package com.faezolfp.dripcontrol.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
@@ -15,8 +16,7 @@ class Repository(
     private val preferences: SettingPreferences,
     private val dataFirebase: Firebase,
     private val userDao: UserDao
-) :
-    IRepository {
+) : IRepository {
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
 
@@ -26,6 +26,14 @@ class Repository(
 
     override suspend fun login(status: Boolean) {
         preferences.saveIsLogin(status)
+    }
+
+    override fun isIDUser(): LiveData<Int> {
+        return preferences.getIdUser().asLiveData()
+    }
+
+    override suspend fun saveIdUser(idUser: Int) {
+        preferences.saveIdUser(idUser)
     }
 
     override suspend fun logout(status: Boolean) {
@@ -75,17 +83,18 @@ class Repository(
         }
     }
 
+    override fun getUsernameById(UserId: Int): LiveData<String> {
+       return userDao.getUsernameById(UserId)
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null
 
         fun getInstance(
-            prev: SettingPreferences,
-            firebase: Firebase,
-            userDao: UserDao
-        ): Repository =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Repository(prev, firebase, userDao)
-            }
+            prev: SettingPreferences, firebase: Firebase, userDao: UserDao
+        ): Repository = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: Repository(prev, firebase, userDao)
+        }
     }
 }

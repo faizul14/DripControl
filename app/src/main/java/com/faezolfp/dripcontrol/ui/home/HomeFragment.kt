@@ -2,17 +2,20 @@ package com.faezolfp.dripcontrol.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.FragmentHomeBinding
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private lateinit var viewModel: HomeViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,12 +26,11 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        val factory = ViewModelFactory.getInstance(requireActivity().application)
+        viewModel = ViewModelProvider(requireActivity(), factory)[HomeViewModel::class.java]
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         return root
     }
 
@@ -36,6 +38,20 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.cdKamar1.setOnClickListener {
             startActivity(Intent(requireActivity(), TrackingScreenActivity::class.java))
+        }
+        observerViewModel()
+    }
+    private fun observerViewModel(){
+        viewModel.idUser.observe(this){UserId->
+            Log.d("TRACKING", "USERID ${UserId.toString()}")
+            if (UserId != 0 || UserId != null){
+                viewModel.getUsernameById(UserId).observe(this){data->
+                    Log.d("TRACKING", "data ${data.toString()}")
+                    binding.apply {
+                        txtUsername.setText(data.toString())
+                    }
+                }
+            }
         }
     }
 

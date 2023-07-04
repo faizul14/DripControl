@@ -98,6 +98,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             viewModel.login(email!!, password!!).observe(this) { data ->
                 if (data != 0 && data != null) {
                     Toast.makeText(this, "Login Berhasil $data", Toast.LENGTH_SHORT).show()
+                    viewModel.saveIdUser(data.toInt())
                     viewModel.login()
                     startActivity(Intent(this, MainActivity2::class.java))
                     finish()

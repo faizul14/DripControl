@@ -11,4 +11,10 @@ class ProfileViewModel(private val useCase: UseCase) : ViewModel() {
             useCase.logout(false)
         }
     }
+
+    fun saveIdUser(idUser: Int){
+        viewModelScope.launch {
+            useCase.saveIdUser(idUser)
+        }
+    }
 }
