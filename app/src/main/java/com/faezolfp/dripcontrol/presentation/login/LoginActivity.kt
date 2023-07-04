@@ -1,10 +1,13 @@
 package com.faezolfp.dripcontrol.presentation.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.MainActivity2
 import com.faezolfp.dripcontrol.R
@@ -12,6 +15,7 @@ import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityLoginBinding
 import com.faezolfp.dripcontrol.presentation.register.RegisterActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.Observable
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityLoginBinding
@@ -25,20 +29,47 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
 
         displayBUtton()
+        setValidasiDisplay()
+    }
 
+    @SuppressLint("CheckResult")
+    private fun setValidasiDisplay() {
         val emailStream = RxTextView.textChanges(binding.edtEmail).skipInitialValue().map { email ->
             !Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
         emailStream.subscribe {
             edtEmailAllert(it)
         }
-        val passtream = RxTextView.textChanges(binding.edtPass).skipInitialValue().map { password ->
-            password.length < 6
+        val passStream = RxTextView.textChanges(binding.edtPass).skipInitialValue().map {
+            it.length < 6
         }
-        passtream.subscribe {
+        passStream.subscribe {
             edtPassAllert(it)
         }
+        val emailpassConfirmation = Observable.combineLatest(
+            emailStream, passStream
+        ) { emailIsValid: Boolean, passwordIsValid: Boolean ->
+            !emailIsValid && !passwordIsValid
+        }
+        emailpassConfirmation.subscribe { isValid ->
+            if (isValid) {
+                binding.btnRegister.isEnabled = true
+                binding.btnRegister.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.btn_reg_log
+                    )
+                )
+            } else {
+                binding.btnRegister.isEnabled = false
+                binding.btnRegister.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this, R.drawable.btn_reg_log_disabled
+                    )
+                )
+            }
+        }
     }
+
 
     private fun displayBUtton() {
         binding.txtRegister.setOnClickListener(this)
@@ -51,10 +82,33 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this, RegisterActivity::class.java))
             }
             R.id.btn_register -> {
-                viewModel.login()
-                startActivity(Intent(this, MainActivity2::class.java))
-                finish()
+                login()
             }
+        }
+    }
+
+    private fun login() {
+        var email: String? = null
+        var password: String? = null
+        binding.apply {
+            email = edtEmail.text.toString()
+            password = edtPass.text.toString()
+        }
+        if (email != null && password != null) {
+            viewModel.login(email!!, password!!).observe(this) { data ->
+                if (data != 0 && data != null) {
+                    Toast.makeText(this, "Login Berhasil $data", Toast.LENGTH_SHORT).show()
+                    viewModel.saveIdUser(data.toInt())
+                    viewModel.login()
+                    startActivity(Intent(this, MainActivity2::class.java))
+                    finish()
+                } else {
+                    Toast.makeText(this, "Email atau Password Masih Salah!!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        } else {
+            Toast.makeText(this, "Email atau Password Masih Kosong!!", Toast.LENGTH_SHORT).show()
         }
     }
 

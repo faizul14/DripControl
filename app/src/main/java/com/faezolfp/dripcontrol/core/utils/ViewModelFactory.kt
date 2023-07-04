@@ -7,19 +7,23 @@ import com.faezolfp.dripcontrol.SplashViewModel
 import com.faezolfp.dripcontrol.core.di.Injection
 import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
 import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
+import com.faezolfp.dripcontrol.presentation.register.RegisterViewModel
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingViewModel
+import com.faezolfp.dripcontrol.ui.home.HomeViewModel
 import com.faezolfp.dripcontrol.ui.profile.ProfileViewModel
 
-class ViewModelFactory private constructor(private val useCase: UseCase) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory private constructor(private val useCase: UseCase) :
+    ViewModelProvider.NewInstanceFactory() {
     companion object {
         const val TAG = "ViewModelFactory"
 
         @Volatile
         private var INCSTANCE: ViewModelFactory? = null
 
-        fun getInstance(application: Application): ViewModelFactory = INCSTANCE ?: synchronized(this) {
-            INCSTANCE ?: ViewModelFactory(Injection.provideUseCase(application))
-        }
+        fun getInstance(application: Application): ViewModelFactory =
+            INCSTANCE ?: synchronized(this) {
+                INCSTANCE ?: ViewModelFactory(Injection.provideUseCase(application))
+            }
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -35,6 +39,13 @@ class ViewModelFactory private constructor(private val useCase: UseCase) : ViewM
         if (modelClass.isAssignableFrom(TrackingViewModel::class.java)) {
             return TrackingViewModel(useCase) as T
         }
+        if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+            return RegisterViewModel(useCase) as T
+        }
+         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(useCase) as T
+        }
+
         throw IllegalArgumentException("Message ${modelClass.name}")
     }
 }

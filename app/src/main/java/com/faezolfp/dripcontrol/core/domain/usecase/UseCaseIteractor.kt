@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.domain.reposotory.IRepository
 
 class UseCaseIteractor(private val repository: IRepository) : UseCase {
@@ -10,6 +11,14 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override suspend fun login(status: Boolean) {
         repository.login(status)
+    }
+
+    override fun isIDUser(): LiveData<Int> {
+        return repository.isIDUser()
+    }
+
+    override suspend fun saveIdUser(idUser: Int) {
+        repository.saveIdUser(idUser)
     }
 
     override suspend fun logout(status: Boolean) {
@@ -38,5 +47,17 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override fun getDataInfusMax(): LiveData<Int> {
         return repository.getDataInfusMax()
+    }
+
+    override fun registerUse(user: Users) {
+        repository.registerUse(user)
+    }
+
+    override fun loginUser(email: String, password: String): LiveData<Int> {
+        return repository.loginUser(email, password)
+    }
+
+    override fun getUsernameById(UserId: Int): LiveData<String> {
+        return repository.getUsernameById(UserId)
     }
 }

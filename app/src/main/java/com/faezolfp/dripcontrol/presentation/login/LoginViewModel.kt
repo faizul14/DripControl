@@ -11,4 +11,12 @@ class LoginViewModel(private val useCase: UseCase) : ViewModel() {
             useCase.login(true)
         }
     }
+
+    fun saveIdUser(idUser: Int){
+        viewModelScope.launch {
+            useCase.saveIdUser(idUser)
+        }
+    }
+
+    fun login(email: String, password: String) = useCase.loginUser(email, password)
 }
