@@ -20,4 +20,7 @@ interface UserDao {
     @Query("SELECT username FROM UserEntity WHERE id = :idUser")
     fun getUsernameById(idUser: Int): LiveData<String>
 
+    @Query("SELECT * FROM UserEntity WHERE id = :idUser")
+    fun getUserById(idUser: Int): LiveData<UserEntity>
+
 }

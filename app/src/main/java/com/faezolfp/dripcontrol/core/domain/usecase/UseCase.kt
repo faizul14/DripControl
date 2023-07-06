@@ -16,6 +16,8 @@ interface UseCase {
     fun setDataInfusMax(data: Int)
     fun getDataInfusMax(): LiveData<Int>
     fun registerUse(user: Users)
+    fun updateUser(user: Users)
+    fun getUseById(userId: Int): LiveData<Users>
     fun loginUser(email: String, password: String): LiveData<Int>
     fun getUsernameById(UserId: Int): LiveData<String>
 

@@ -17,4 +17,7 @@ class ProfileViewModel(private val useCase: UseCase) : ViewModel() {
             useCase.saveIdUser(idUser)
         }
     }
+
+    val idUser = useCase.isIDUser()
+
 }

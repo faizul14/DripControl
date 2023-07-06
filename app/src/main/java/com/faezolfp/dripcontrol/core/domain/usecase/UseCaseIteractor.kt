@@ -53,6 +53,14 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
         repository.registerUse(user)
     }
 
+    override fun updateUser(user: Users) {
+        repository.updateUser(user)
+    }
+
+    override fun getUseById(userId: Int): LiveData<Users> {
+        return repository.getUseById(userId)
+    }
+
     override fun loginUser(email: String, password: String): LiveData<Int> {
         return repository.loginUser(email, password)
     }

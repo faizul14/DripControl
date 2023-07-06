@@ -16,6 +16,7 @@ class ProfileFragment : Fragment() {
     private lateinit var _binding: FragmentProfileBinding
     private val binding get() = _binding!!
     private lateinit var viewModel: ProfileViewModel
+    private  var idUserFromObserver: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,14 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        displayObserver()
         displayButton()
+    }
+
+    private fun displayObserver() {
+        viewModel.idUser.observe(this){data->
+            idUserFromObserver = data
+        }
     }
 
     private fun displayButton() {
@@ -44,7 +52,12 @@ class ProfileFragment : Fragment() {
         }
 
         binding.editProfile.setOnClickListener {
-            startActivity(Intent(requireActivity(), EditProfileActivity::class.java))
+//            startActivity(Intent(requireActivity(), EditProfileActivity::class.java))
+            if (idUserFromObserver !=  0){
+                val move = Intent(requireContext(), EditProfileActivity::class.java)
+                move.putExtra(EditProfileActivity.IDUSER, idUserFromObserver.toString())
+                startActivity(move)
+            }
         }
     }
 }
