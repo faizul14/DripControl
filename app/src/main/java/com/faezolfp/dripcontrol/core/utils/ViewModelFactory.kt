@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.SplashViewModel
 import com.faezolfp.dripcontrol.core.di.Injection
 import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
+import com.faezolfp.dripcontrol.presentation.addpasien.InserPasienViewModel
 import com.faezolfp.dripcontrol.presentation.editprofile.EditProfilViewModel
 import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
 import com.faezolfp.dripcontrol.presentation.register.RegisterViewModel
@@ -48,6 +49,9 @@ class ViewModelFactory private constructor(private val useCase: UseCase) :
         }
         if (modelClass.isAssignableFrom(EditProfilViewModel::class.java)) {
             return EditProfilViewModel(useCase) as T
+        }
+        if (modelClass.isAssignableFrom(InserPasienViewModel::class.java)) {
+            return InserPasienViewModel(useCase) as T
         }
 
         throw IllegalArgumentException("Message ${modelClass.name}")

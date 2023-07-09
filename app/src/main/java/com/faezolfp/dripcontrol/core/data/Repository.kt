@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import com.faezolfp.dripcontrol.core.data.local.SettingPreferences
 import com.faezolfp.dripcontrol.core.data.local.UserDao
+import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.domain.reposotory.IRepository
 import com.faezolfp.dripcontrol.core.utils.DataMapper
@@ -96,6 +97,18 @@ class Repository(
 
     override fun getUsernameById(UserId: Int): LiveData<String> {
         return userDao.getUsernameById(UserId)
+    }
+
+    override fun addPasien(pasiens: Pasiens) {
+        executorService.execute {
+            userDao.addPasien(DataMapper.dataMapFromModelToPasienEntity(pasiens))
+        }
+    }
+
+    override fun getListPasiens(kamar: Int): LiveData<List<Pasiens>> {
+        return userDao.getListPasien(kamar).map {
+            DataMapper.dataMapFromListPasienEntityToListPasienModel(it)
+        }
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.reposotory
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.domain.model.Users
 
 interface IRepository {
@@ -21,5 +22,8 @@ interface IRepository {
     fun loginUser(email: String, password: String): LiveData<Int>
 
     fun getUsernameById(UserId: Int): LiveData<String>
+
+    fun addPasien(pasiens: Pasiens)
+    fun getListPasiens(kamar: Int): LiveData<List<Pasiens>>
 
 }
