@@ -104,6 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -111,7 +112,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/robot_medium"
-        android:text="SUBMIT"
+        android:text="EDIT"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

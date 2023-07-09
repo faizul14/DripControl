@@ -1,6 +1,5 @@
 package com.faezolfp.dripcontrol.core.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
@@ -70,6 +69,18 @@ class Repository(
         }
     }
 
+    override fun updateUser(user: Users) {
+        executorService.execute {
+            userDao.userUpdate(DataMapper.dataMapFromModelToEntity(user))
+        }
+    }
+
+    override fun getUseById(userId: Int): LiveData<Users> {
+        return userDao.getUserById(userId).map { userEntity ->
+            DataMapper.dataMapFromEntityToModel(userEntity)
+        }
+    }
+
     override fun loginUser(email: String, password: String): LiveData<Int> {
         return userDao.login(email, password).apply {
             try {
@@ -84,7 +95,7 @@ class Repository(
     }
 
     override fun getUsernameById(UserId: Int): LiveData<String> {
-       return userDao.getUsernameById(UserId)
+        return userDao.getUsernameById(UserId)
     }
 
     companion object {

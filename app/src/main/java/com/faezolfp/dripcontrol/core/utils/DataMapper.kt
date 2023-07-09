@@ -6,6 +6,7 @@ import com.faezolfp.dripcontrol.core.domain.model.Users
 object DataMapper {
     fun dataMapFromModelToEntity(users: Users): UserEntity {
         val data = UserEntity(
+            id = users.id,
             username = users.username,
             fulname = users.fullname,
             email = users.email,
@@ -16,6 +17,7 @@ object DataMapper {
     }
     fun dataMapFromEntityToModel(users: UserEntity): Users {
         val data = Users(
+            id = users.id ?: 0,
             username = users.username ?: null,
             fullname = users.fulname ?: null,
             email = users.email ?: null,
