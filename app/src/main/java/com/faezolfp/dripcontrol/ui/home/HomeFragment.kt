@@ -38,7 +38,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.cdKamar1.setOnClickListener {
-            startActivity(Intent(requireActivity(), ListPasienActivity::class.java))
+            startActivity(
+                Intent(requireActivity(), ListPasienActivity::class.java)
+                .putExtra(ListPasienActivity.KAMARPASIEN, "1")
+            )
+
+        }
+        binding.cdKamar2.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), ListPasienActivity::class.java)
+                    .putExtra(ListPasienActivity.KAMARPASIEN, "2")
+            )
+
+        }
+        binding.cdKamar3.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), ListPasienActivity::class.java)
+                    .putExtra(ListPasienActivity.KAMARPASIEN, "3")
+            )
+
+        }
+        binding.cdKamar4.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), ListPasienActivity::class.java)
+                    .putExtra(ListPasienActivity.KAMARPASIEN, "4")
+            )
 
         }
         observerViewModel()

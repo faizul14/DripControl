@@ -38,13 +38,15 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private fun displayButton() {
         binding.buttonMinus.setOnClickListener(this)
         binding.buttonPlus.setOnClickListener(this)
+        binding.btnSetmakro.setOnClickListener(this)
+        binding.btnSetmikro.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.buttonPlus -> {
                 if (dataSave < 150) {
-                    dataSave += 10
+                    dataSave += 1
                     viewModel.setDataTpm(dataSave)
                 } else {
                     Toast.makeText(this, "Batas Maksimum", Toast.LENGTH_SHORT).show()
@@ -52,20 +54,44 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.buttonMinus -> {
                 if (dataSave > 0) {
-                    dataSave -= 10
+                    dataSave -= 1
                     viewModel.setDataTpm(dataSave)
                 } else {
                     Toast.makeText(this, "Batas Minimum", Toast.LENGTH_SHORT).show()
                 }
             }
+            R.id.btn_setmakro -> {
+                viewModel.setDataTpm(20)
+            }
+            R.id.btn_setmikro -> {
+                viewModel.setDataTpm(60)
+            }
+
         }
+
     }
 
     private fun displayObserveViewModel() {
-        viewModel.getDataInfusMax.observe(this) { data ->
-            if (data != null) {
-                dataInpustMax = data.toInt()
+        viewModel.getDataInfusMax.observe(this) { datamax ->
+            if (datamax != null) {
+//                dataInpustMax = data.toInt()
                 Log.d("TRACKING", dataInpustMax.toString())
+
+                viewModel.getDataInfus.observe(this) { data ->
+                    if (data != null) {
+                        binding.progressBar2.apply {
+                            max = datamax
+                            progress = data.toInt()
+                        }
+                        dataInpusRealtime = data.toInt()
+                        Log.d("TRACKING", "$datamax $dataInpusRealtime")
+
+                        val persentase =
+                            FormatPersentase.persentaseRealtime(datamax, dataInpusRealtime)
+                        binding.txtDtinfuspersen.text = "$persentase%"
+                    }
+                }
+
             }
         }
 
@@ -77,21 +103,6 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 binding.txtTpm.text = "$data\nTPM"
             } else {
                 dataSave = 0
-            }
-        }
-
-        viewModel.getDataInfus.observe(this) { data ->
-            if (data != null) {
-                binding.progressBar2.apply {
-                    max = dataInpustMax
-                    progress = data.toInt()
-                }
-                dataInpusRealtime = data.toInt()
-                Log.d("TRACKING", "$dataInpustMax $dataInpusRealtime")
-
-                val persentase =
-                    FormatPersentase.persentaseRealtime(dataInpustMax, dataInpusRealtime)
-                binding.txtDtinfuspersen.text = "$persentase%"
             }
         }
     }
