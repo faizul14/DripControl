@@ -74,6 +74,7 @@ class InsertPasienActivity : AppCompatActivity(), View.OnClickListener {
             )
             viewModel.saveDataPasien(data)
             Toast.makeText(this, "Data berhasil di simpan!!!", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 

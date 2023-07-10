@@ -8,6 +8,7 @@ import com.faezolfp.dripcontrol.core.di.Injection
 import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
 import com.faezolfp.dripcontrol.presentation.addpasien.InserPasienViewModel
 import com.faezolfp.dripcontrol.presentation.editprofile.EditProfilViewModel
+import com.faezolfp.dripcontrol.presentation.listpasien.ListPasienViewModel
 import com.faezolfp.dripcontrol.presentation.login.LoginViewModel
 import com.faezolfp.dripcontrol.presentation.register.RegisterViewModel
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingViewModel
@@ -52,6 +53,9 @@ class ViewModelFactory private constructor(private val useCase: UseCase) :
         }
         if (modelClass.isAssignableFrom(InserPasienViewModel::class.java)) {
             return InserPasienViewModel(useCase) as T
+        }
+        if (modelClass.isAssignableFrom(ListPasienViewModel::class.java)) {
+            return ListPasienViewModel(useCase) as T
         }
 
         throw IllegalArgumentException("Message ${modelClass.name}")
