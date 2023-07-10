@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.domain.reposotory.IRepository
 
@@ -67,5 +68,13 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override fun getUsernameById(UserId: Int): LiveData<String> {
         return repository.getUsernameById(UserId)
+    }
+
+    override fun addPasien(pasiens: Pasiens) {
+        repository.addPasien(pasiens)
+    }
+
+    override fun getListPasiens(kamar: Int): LiveData<List<Pasiens>> {
+        return repository.getListPasiens(kamar)
     }
 }

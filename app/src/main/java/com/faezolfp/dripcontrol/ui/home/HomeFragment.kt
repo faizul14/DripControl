@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.FragmentHomeBinding
+import com.faezolfp.dripcontrol.presentation.listpasien.ListPasienActivity
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 
 class HomeFragment : Fragment() {
@@ -37,7 +38,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.cdKamar1.setOnClickListener {
-            startActivity(Intent(requireActivity(), TrackingScreenActivity::class.java))
+            startActivity(Intent(requireActivity(), ListPasienActivity::class.java))
+
         }
         observerViewModel()
     }
