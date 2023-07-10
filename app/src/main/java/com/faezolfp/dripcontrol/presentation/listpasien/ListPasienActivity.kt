@@ -27,6 +27,9 @@ class ListPasienActivity : AppCompatActivity(), View.OnClickListener {
         val factory = ViewModelFactory.getInstance(application)
         viewModel = ViewModelProvider(this, factory)[ListPasienViewModel::class.java]
 
+        binding.imgBlank.visibility = View.VISIBLE
+        binding.rvListpasien.visibility = View.GONE
+
         buttonDisplay()
         display()
     }
@@ -35,10 +38,13 @@ class ListPasienActivity : AppCompatActivity(), View.OnClickListener {
         binding.rvListpasien.layoutManager = LinearLayoutManager(this)
         kamarPasie?.let {
             viewModel.dataPasien(it.toInt()).observe(this) { dataPasien ->
-                adapter = ListPasienAdapter()
-                adapter.setDataPasien(dataPasien)
-                binding.rvListpasien.adapter = adapter
-
+                if (dataPasien != null){
+                    adapter = ListPasienAdapter()
+                    adapter.setDataPasien(dataPasien)
+                    binding.rvListpasien.adapter = adapter
+                    binding.imgBlank.visibility = View.GONE
+                    binding.rvListpasien.visibility = View.VISIBLE
+                }
             }
         }
     }

@@ -1,11 +1,13 @@
 package com.faezolfp.dripcontrol.core.domain.ui
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.databinding.ItemListBinding
+import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 
 class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
 
@@ -42,6 +44,11 @@ class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
                 txtUmur.text = "${data.umur} Tahun"
                 txtBeratbadan.text = "${data.brtbadan} KG"
                 txtBbb.text = dataBB
+            }
+
+            itemView.setOnClickListener {
+                val move = Intent(itemView.context, TrackingScreenActivity::class.java)
+                itemView.context.startActivity(move)
             }
         }
     }
