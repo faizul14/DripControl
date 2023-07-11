@@ -37,14 +37,26 @@ class NotificationsFragment : Fragment() {
         return root
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        binding.apply {
+//            imgBlank.visibility = View.VISIBLE
+//            rvListnotif.visibility = View.GONE
+//        }
+//    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvListnotif.layoutManager = LinearLayoutManager(requireContext())
         viewModel.dataNotifikasi.observe(viewLifecycleOwner) {data->
-            if (data != null){
+            if (data.isNotEmpty()){
                 adapter = NotifikasiAdapter()
                 adapter.setListNotofokasi(data)
                 binding.rvListnotif.adapter = adapter
+                binding.apply {
+                    imgBlank.visibility = View.GONE
+                    rvListnotif.visibility = View.VISIBLE
+                }
             }
         }
     }

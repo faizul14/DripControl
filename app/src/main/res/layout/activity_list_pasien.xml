@@ -65,6 +65,16 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:src="@drawable/vector_doctor" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/poppins_bold"-->
+<!--            android:text="EMPTY"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20sp"/>-->
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

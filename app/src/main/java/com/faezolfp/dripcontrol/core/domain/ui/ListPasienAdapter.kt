@@ -3,13 +3,14 @@ package com.faezolfp.dripcontrol.core.domain.ui
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.databinding.ItemListBinding
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 
-class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
+class ListPasienAdapter() : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
 
     private val listPasiens = ArrayList<Pasiens>()
     fun setDataPasien(data: List<Pasiens>) {
@@ -47,7 +48,9 @@ class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
             }
 
             itemView.setOnClickListener {
+                val dataMove = data
                 val move = Intent(itemView.context, TrackingScreenActivity::class.java)
+                move.putExtra(TrackingScreenActivity.DATA_MOVE, dataMove)
                 itemView.context.startActivity(move)
             }
         }

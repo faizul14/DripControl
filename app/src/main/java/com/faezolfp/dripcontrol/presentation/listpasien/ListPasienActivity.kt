@@ -3,6 +3,7 @@ package com.faezolfp.dripcontrol.presentation.listpasien
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,18 +28,21 @@ class ListPasienActivity : AppCompatActivity(), View.OnClickListener {
         val factory = ViewModelFactory.getInstance(application)
         viewModel = ViewModelProvider(this, factory)[ListPasienViewModel::class.java]
 
-        binding.imgBlank.visibility = View.VISIBLE
-        binding.rvListpasien.visibility = View.GONE
-
         buttonDisplay()
         display()
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        binding.imgBlank.visibility = View.VISIBLE
+//        binding.rvListpasien.visibility = View.GONE
+//    }
 
     private fun display() {
         binding.rvListpasien.layoutManager = LinearLayoutManager(this)
         kamarPasie?.let {
             viewModel.dataPasien(it.toInt()).observe(this) { dataPasien ->
-                if (dataPasien != null){
+                if (dataPasien.isNotEmpty()){
                     adapter = ListPasienAdapter()
                     adapter.setDataPasien(dataPasien)
                     binding.rvListpasien.adapter = adapter

@@ -10,10 +10,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class Firebase {
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("DataInfus")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("DripControl")
 
     fun setTpm(data: Int) {
-        database.child("BeratInfus").setValue(data).addOnSuccessListener {
+        database.child("TPM").setValue(data).addOnSuccessListener {
         }.addOnFailureListener {
             Log.d("RESULTFIREBASE", it.toString())
         }
@@ -23,7 +23,7 @@ class Firebase {
         val result = MutableLiveData<Int>()
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dataInf = snapshot.child("BeratInfus").value
+                val dataInf = snapshot.child("TPM").value
                 result.value = dataInf.toString().toInt()
             }
 
@@ -38,7 +38,7 @@ class Firebase {
     }
 
     fun setDataInfus(data: Int) {
-        database.child("Testesan/DataRealtime").setValue(data).addOnSuccessListener {
+        database.child("VolumeInfus/CurrentVolume").setValue(data).addOnSuccessListener {
         }.addOnFailureListener {
             Log.d("RESULTFIREBASE", it.toString())
         }
@@ -48,7 +48,7 @@ class Firebase {
         val result = MutableLiveData<Int>()
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dataInf = snapshot.child("Testesan/DataRealtime").value
+                val dataInf = snapshot.child("VolumeInfus/CurrentVolume").value
                 result.value = dataInf.toString().toInt()
             }
 
@@ -63,7 +63,7 @@ class Firebase {
     }
 
     fun setDataInfusMax(data: Int) {
-        database.child("Testesan/Max").setValue(data).addOnSuccessListener {
+        database.child("VolumeInfus/MaxVolume").setValue(data).addOnSuccessListener {
         }.addOnFailureListener {
             Log.d("RESULTFIREBASE", it.toString())
         }
@@ -73,7 +73,7 @@ class Firebase {
         val result = MutableLiveData<Int>()
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val dataInf = snapshot.child("Testesan/Max").value
+                val dataInf = snapshot.child("VolumeInfus/MaxVolume").value
                 result.value = dataInf.toString().toInt()
                 Log.d("TRACKING", dataInf.toString())
             }

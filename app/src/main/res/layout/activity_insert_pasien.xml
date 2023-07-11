@@ -71,6 +71,7 @@
 
     <EditText
         android:id="@+id/edt_umur"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -98,6 +99,7 @@
 
     <EditText
         android:id="@+id/edt_brtbdn"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -117,7 +119,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/popins_medium"
-        android:text="Banyak Cairan Infus"
+        android:text="Volume Cairan Infus"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +132,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:hint="XXX ml"
+        android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:fontFamily="@font/popins_medium"
@@ -156,7 +159,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="XX TPM"
+        android:hint="XX Jam"
+        android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:fontFamily="@font/popins_medium"
@@ -184,6 +188,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:hint="XX TPM"
+        android:inputType="number"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:fontFamily="@font/popins_medium"
