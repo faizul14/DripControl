@@ -18,6 +18,10 @@
             android:name=".core.service.NotificationBroadcastReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
+        <service
+            android:name=".core.service.AlarmNotificationService"
+            android:enabled="true"
+            android:exported="false" />
 
         <activity
             android:name=".presentation.listpasien.ListPasienActivity"
