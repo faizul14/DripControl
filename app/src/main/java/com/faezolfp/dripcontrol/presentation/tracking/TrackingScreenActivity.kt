@@ -1,5 +1,7 @@
 package com.faezolfp.dripcontrol.presentation.tracking
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -7,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
+import com.faezolfp.dripcontrol.core.service.NotificationBroadcastReceiver
 import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityTrackingScreenBinding
@@ -27,6 +30,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
         viewModel = ViewModelProvider(this, factory)[TrackingViewModel::class.java]
 
         setDisplay()
+        shownotif()
     }
 
     private fun setDisplay() {
@@ -105,6 +109,13 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 dataSave = 0
             }
         }
+    }
+
+    private fun shownotif(){
+        val intent = Intent(this, NotificationBroadcastReceiver::class.java)
+        intent.action = "ACTION_SHOW_NOTIFICATION"
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        pendingIntent.send()
     }
 
 //    private fun showNotification() {
