@@ -71,7 +71,7 @@ class AlarmNotificationService : Service() {
             this,
             0,
             stopIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
