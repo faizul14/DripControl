@@ -1,6 +1,7 @@
 package com.faezolfp.dripcontrol.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import com.faezolfp.dripcontrol.core.domain.model.Notifikasi
 import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.domain.reposotory.IRepository
@@ -76,5 +77,13 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
 
     override fun getListPasiens(kamar: Int): LiveData<List<Pasiens>> {
         return repository.getListPasiens(kamar)
+    }
+
+    override fun saveNotifikasi(notifikasi: Notifikasi) {
+        repository.saveNotifikasi(notifikasi)
+    }
+
+    override fun getNotifikasi(): LiveData<List<Notifikasi>> {
+        return repository.getNotifikasi()
     }
 }

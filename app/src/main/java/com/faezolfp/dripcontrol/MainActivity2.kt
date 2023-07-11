@@ -1,5 +1,6 @@
 package com.faezolfp.dripcontrol
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.faezolfp.dripcontrol.core.domain.model.Notifikasi
 import com.faezolfp.dripcontrol.core.service.AlarmNotificationService
 import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
@@ -19,6 +21,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityMain2Binding
     private lateinit var viewModel: MainViewModel
+    private var listNotifkasi = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,7 @@ class MainActivity2 : AppCompatActivity() {
 
         val factory = ViewModelFactory.getInstance(application)
         viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+        displayObserver()
 
         val navView: BottomNavigationView = binding.navView
 
@@ -42,10 +46,18 @@ class MainActivity2 : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        displayObserver()
     }
 
     private fun displayObserver() {
+
+        viewModel.getNotifikasi.observe(this){datalist->
+            if (datalist.isNotEmpty()){
+                datalist.map {
+                    it.kamar?.let { it1 -> listNotifkasi.add(it1) }
+                }
+            }
+        }
+
         viewModel.getDataMax.observe(this) { dataMax ->
             if (dataMax != null) {
                 viewModel.getDataInfus.observe(this) { dataRealtime ->
@@ -63,5 +75,16 @@ class MainActivity2 : AppCompatActivity() {
     private fun shownotif() {
         val serviceIntent = Intent(this, AlarmNotificationService::class.java)
         ContextCompat.startForegroundService(this, serviceIntent)
+        if (!listNotifkasi.contains("1")){
+            val data = Notifikasi(
+                kamar = "1"
+            )
+            viewModel.saveNotifkasi(data)
+        }else if (!listNotifkasi.contains("2")){
+            val data = Notifikasi(
+                kamar = "2"
+            )
+            viewModel.saveNotifkasi(data)
+        }
     }
 }

@@ -18,7 +18,7 @@ import com.faezolfp.dripcontrol.R
 
 class AlarmNotificationService : Service() {
 
-    private companion object {
+    companion object {
         const val CHANNEL_ID = "AlarmChannelId"
         const val NOTIFICATION_ID = 1
         const val NOTIFICATION_ACTION_STOP = "com.example.alarmapp.STOP"
@@ -56,13 +56,13 @@ class AlarmNotificationService : Service() {
                 "Alarm Channel",
                 NotificationManager.IMPORTANCE_HIGH
             )
-//            channel.setSound(
-//                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
-//                AudioAttributes.Builder()
-//                    .setUsage(AudioAttributes.USAGE_ALARM)
-//                    .build()
-//            )
-//            notificationManager.createNotificationChannel(channel)
+            channel.setSound(
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM),
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build()
+            )
+            notificationManager.createNotificationChannel(channel)
         }
 
         val stopIntent = Intent(this, AlarmNotificationService::class.java)

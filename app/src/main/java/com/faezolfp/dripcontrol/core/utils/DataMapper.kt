@@ -1,7 +1,9 @@
 package com.faezolfp.dripcontrol.core.utils
 
+import com.faezolfp.dripcontrol.core.data.local.NotifikasiEntity
 import com.faezolfp.dripcontrol.core.data.local.PasienEntity
 import com.faezolfp.dripcontrol.core.data.local.UserEntity
+import com.faezolfp.dripcontrol.core.domain.model.Notifikasi
 import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.domain.model.Users
 
@@ -60,5 +62,26 @@ object DataMapper {
         }
         return dataList
     }
+
+    fun dataMapFromModelToEntityNotifikasi(notifikasi: Notifikasi): NotifikasiEntity {
+        val data = NotifikasiEntity(
+            id = notifikasi.id,
+            kamar = notifikasi.kamar
+        )
+
+        return data
+    }
+    fun dataMapFromEntityToModelNotifikasi(notifikasiEntity: List<NotifikasiEntity>): List<Notifikasi> {
+        val dataList = ArrayList<Notifikasi>()
+        notifikasiEntity.map {
+            val data = Notifikasi(
+                id = it.id,
+                kamar = it.kamar
+            )
+            dataList.add(data)
+        }
+        return dataList
+    }
+
 
 }
