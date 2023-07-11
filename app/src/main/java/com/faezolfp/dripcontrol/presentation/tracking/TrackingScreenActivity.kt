@@ -1,12 +1,17 @@
 package com.faezolfp.dripcontrol.presentation.tracking
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
+import com.faezolfp.dripcontrol.core.service.AlarmNotificationService
+import com.faezolfp.dripcontrol.core.service.NotificationBroadcastReceiver
 import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityTrackingScreenBinding
@@ -89,6 +94,9 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                         val persentase =
                             FormatPersentase.persentaseRealtime(datamax, dataInpusRealtime)
                         binding.txtDtinfuspersen.text = "$persentase%"
+                        if (persentase <= 20){
+                            shownotif()
+                        }
                     }
                 }
 
@@ -105,6 +113,15 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 dataSave = 0
             }
         }
+    }
+
+    private fun shownotif(){
+//        val intent = Intent(this, NotificationBroadcastReceiver::class.java)
+//        intent.action = "ACTION_SHOW_NOTIFICATION"
+//        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+//        pendingIntent.send()
+        val serviceIntent = Intent(this, AlarmNotificationService::class.java)
+        ContextCompat.startForegroundService(this, serviceIntent)
     }
 
 //    private fun showNotification() {

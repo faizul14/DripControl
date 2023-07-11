@@ -3,11 +3,9 @@ package com.faezolfp.dripcontrol.ui.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.faezolfp.dripcontrol.core.domain.usecase.UseCase
 
-class NotificationsViewModel : ViewModel() {
+class NotificationsViewModel(private val useCase: UseCase): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+    val dataNotifikasi = useCase.getNotifikasi()
 }
