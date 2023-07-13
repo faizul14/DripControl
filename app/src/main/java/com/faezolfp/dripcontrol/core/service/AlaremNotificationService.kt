@@ -10,9 +10,9 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.faezolfp.dripcontrol.R
 
@@ -42,6 +42,7 @@ class AlarmNotificationService : Service() {
             stopSelf()
         } else {
             startForeground(NOTIFICATION_ID, createNotification())
+            Log.d("TRACKINGFORGROUND", "DISPLAY")
         }
         mediaPlayer.start()
         return START_NOT_STICKY

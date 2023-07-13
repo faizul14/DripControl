@@ -3,6 +3,7 @@ package com.faezolfp.dripcontrol
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -73,6 +74,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     private fun shownotif() {
+        Log.d("TRACKINGFORGROUND", "DISPLAY1")
         val serviceIntent = Intent(this, AlarmNotificationService::class.java)
         ContextCompat.startForegroundService(this, serviceIntent)
         if (!listNotifkasi.contains("1")){

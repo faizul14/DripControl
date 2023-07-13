@@ -11,6 +11,7 @@ import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.FragmentProfileBinding
 import com.faezolfp.dripcontrol.presentation.editprofile.EditProfileActivity
 import com.faezolfp.dripcontrol.presentation.login.LoginActivity
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class ProfileFragment : Fragment() {
     private lateinit var _binding: FragmentProfileBinding
