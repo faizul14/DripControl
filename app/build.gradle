@@ -78,4 +78,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:17.4.3'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
+    //toast
+    implementation 'io.github.shashank02051997:FancyToast:2.0.2'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'
+
+
+
+
 }

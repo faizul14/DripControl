@@ -1,5 +1,6 @@
 package com.faezolfp.dripcontrol.presentation.tracking
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.faezolfp.dripcontrol.R
+import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.service.AlarmNotificationService
 import com.faezolfp.dripcontrol.core.service.NotificationBroadcastReceiver
 import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityTrackingScreenBinding
+import com.google.android.gms.dynamic.IFragmentWrapper
 
 class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityTrackingScreenBinding
@@ -22,12 +25,29 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private var dataSave = 0
     private var dataInpustMax = 0
     private var dataInpusRealtime = 0
+    private lateinit var dataMove: Pasiens
+    private var presentase: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTrackingScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
 
+
+        try {
+            dataMove = intent.getParcelableExtra<Pasiens>(DATA_MOVE) as Pasiens
+        }catch (e: Exception){
+            dataMove = Pasiens(
+                id = 0,
+                nama = "DEVA MASRESLINA",
+                umur = "20",
+                brtbadan = "57",
+                banyakcairaninfus = "100",
+                lamapemberianinfus = "100",
+                tetsanpermenit = "60",
+                kamar = 1
+            )
+        }
         val factory = ViewModelFactory.getInstance(application)
         viewModel = ViewModelProvider(this, factory)[TrackingViewModel::class.java]
 
@@ -37,7 +57,42 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDisplay() {
         displayButton()
         displayObserveViewModel()
+        display()
 //        showNotification()
+    }
+
+    private fun display(){
+        val persentase = FormatPersentase.persentaseRealtime(dataInpustMax, dataInpusRealtime)
+        if (dataMove != null){
+
+            var dataBB: String? = null
+            when (dataMove!!.kamar) {
+                1 -> {
+                    dataBB = "B1"
+                    binding.materialCardView.setCardBackgroundColor(this.resources.getColor(R.color.colorshape1))
+                }
+                2 -> {
+                    dataBB = "B2"
+                    binding.materialCardView.setCardBackgroundColor(this.resources.getColor(R.color.colorshape2))
+                }
+                3 -> {
+                    dataBB = "B3"
+                    binding.materialCardView.setCardBackgroundColor(this.resources.getColor(R.color.colorshape3))
+                }
+                else -> {
+                    dataBB = "B4"
+                    binding.materialCardView.setCardBackgroundColor(this.resources.getColor(R.color.colorshape4))
+                }
+            }
+
+            binding.apply {
+                txtNama.setText(dataMove!!.nama)
+                txtUmur.setText("${dataMove!!.umur} Tahun")
+                txtBeratbadan.setText("${dataMove!!.brtbadan} KG")
+                txtBbb.setText(dataBB)
+                txtStatusinfus.setText("${persentase}%")
+            }
+        }
     }
 
     private fun displayButton() {
@@ -79,7 +134,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private fun displayObserveViewModel() {
         viewModel.getDataInfusMax.observe(this) { datamax ->
             if (datamax != null) {
-//                dataInpustMax = data.toInt()
+                dataInpustMax = datamax.toInt()
                 Log.d("TRACKING", dataInpustMax.toString())
 
                 viewModel.getDataInfus.observe(this) { data ->
@@ -89,14 +144,22 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                             progress = data.toInt()
                         }
                         dataInpusRealtime = data.toInt()
+                        display()
                         Log.d("TRACKING", "$datamax $dataInpusRealtime")
 
                         val persentase =
                             FormatPersentase.persentaseRealtime(datamax, dataInpusRealtime)
+                        presentase = persentase
+                        if (persentase > 1){
+                            viewModel.setStatusInfus("LANCAR")
+                        }else{
+                            viewModel.setStatusInfus("TERSUMBAT")
+                        }
                         binding.txtDtinfuspersen.text = "$persentase%"
                         if (persentase <= 20){
                             shownotif()
                         }
+
                     }
                 }
 
@@ -111,6 +174,13 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 binding.txtTpm.text = "$data\nTPM"
             } else {
                 dataSave = 0
+            }
+        }
+        viewModel.getStatusInfus.observe(this){statusInfus ->
+            if (statusInfus.isNotEmpty()){
+                binding.apply {
+                    txtStatus.setText(statusInfus)
+                }
             }
         }
     }
@@ -161,4 +231,8 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
 //        private const val NOTIFICATION_ID = 1
 //        private const val CHANNEL_NAME = "dicoding channel"
 //    }
+
+    companion object{
+        const val DATA_MOVE = "data_MOVE"
+    }
 }

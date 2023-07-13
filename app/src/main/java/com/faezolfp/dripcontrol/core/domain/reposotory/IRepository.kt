@@ -30,4 +30,8 @@ interface IRepository {
     fun saveNotifikasi(notifikasi: Notifikasi)
     fun getNotifikasi(): LiveData<List<Notifikasi>>
 
+    fun setStatusInfus(status: String)
+
+    fun getStatusInfus(): LiveData<String>
+
 }

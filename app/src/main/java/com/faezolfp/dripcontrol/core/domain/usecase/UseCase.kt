@@ -24,7 +24,8 @@ interface UseCase {
     fun getUsernameById(UserId: Int): LiveData<String>
     fun addPasien(pasiens: Pasiens)
     fun getListPasiens(kamar: Int): LiveData<List<Pasiens>>
-
     fun saveNotifikasi(notifikasi: Notifikasi)
     fun getNotifikasi(): LiveData<List<Notifikasi>>
+    fun setStatusInfus(status: String)
+    fun getStatusInfus(): LiveData<String>
 }

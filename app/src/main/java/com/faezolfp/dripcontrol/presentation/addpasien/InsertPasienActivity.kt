@@ -9,6 +9,7 @@ import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityInsertPasienBinding
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class InsertPasienActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityInsertPasienBinding
@@ -73,7 +74,7 @@ class InsertPasienActivity : AppCompatActivity(), View.OnClickListener {
                 kamar = kamar,
             )
             viewModel.saveDataPasien(data)
-            Toast.makeText(this, "Data berhasil di simpan!!!", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(this, "Data berhasil di simpan!", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show()
             finish()
         }
     }

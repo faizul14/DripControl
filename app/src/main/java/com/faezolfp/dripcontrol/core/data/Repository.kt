@@ -124,6 +124,14 @@ class Repository(
         }
     }
 
+    override fun setStatusInfus(status: String) {
+        dataFirebase.setStatusInfus(status)
+    }
+
+    override fun getStatusInfus(): LiveData<String> {
+        return dataFirebase.getStatusInfus()
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null

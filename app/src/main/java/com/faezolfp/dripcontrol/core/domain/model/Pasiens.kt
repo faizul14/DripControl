@@ -1,6 +1,10 @@
 package com.faezolfp.dripcontrol.core.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+
+@Parcelize
 data class Pasiens(
     var id: Int = 0,
     var nama: String? = null,
@@ -10,4 +14,4 @@ data class Pasiens(
     var lamapemberianinfus: String? = null,
     var tetsanpermenit: String? = null,
     var kamar: Int? = null,
-)
+): Parcelable
