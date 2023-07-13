@@ -86,4 +86,12 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
     override fun getNotifikasi(): LiveData<List<Notifikasi>> {
         return repository.getNotifikasi()
     }
+
+    override fun setStatusInfus(status: String) {
+        repository.setStatusInfus(status)
+    }
+
+    override fun getStatusInfus(): LiveData<String> {
+        return repository.getStatusInfus()
+    }
 }

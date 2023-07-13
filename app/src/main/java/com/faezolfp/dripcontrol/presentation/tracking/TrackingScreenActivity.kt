@@ -17,6 +17,7 @@ import com.faezolfp.dripcontrol.core.service.NotificationBroadcastReceiver
 import com.faezolfp.dripcontrol.core.utils.FormatPersentase
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityTrackingScreenBinding
+import com.google.android.gms.dynamic.IFragmentWrapper
 
 class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityTrackingScreenBinding
@@ -25,6 +26,7 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
     private var dataInpustMax = 0
     private var dataInpusRealtime = 0
     private lateinit var dataMove: Pasiens
+    private var presentase: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTrackingScreenBinding.inflate(layoutInflater)
@@ -147,10 +149,17 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
 
                         val persentase =
                             FormatPersentase.persentaseRealtime(datamax, dataInpusRealtime)
+                        presentase = persentase
+                        if (persentase > 1){
+                            viewModel.setStatusInfus("LANCAR")
+                        }else{
+                            viewModel.setStatusInfus("TERSUMBAT")
+                        }
                         binding.txtDtinfuspersen.text = "$persentase%"
                         if (persentase <= 20){
                             shownotif()
                         }
+
                     }
                 }
 
@@ -165,6 +174,13 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                 binding.txtTpm.text = "$data\nTPM"
             } else {
                 dataSave = 0
+            }
+        }
+        viewModel.getStatusInfus.observe(this){statusInfus ->
+            if (statusInfus.isNotEmpty()){
+                binding.apply {
+                    txtStatus.setText(statusInfus)
+                }
             }
         }
     }

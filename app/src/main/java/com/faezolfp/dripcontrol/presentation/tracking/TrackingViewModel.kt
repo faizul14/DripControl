@@ -20,4 +20,8 @@ class TrackingViewModel(private val useCase: UseCase) : ViewModel() {
     }
 
     val getDataInfusMax = useCase.getDataInfusMax()
+
+    fun setStatusInfus(status: String) = useCase.setStatusInfus(status)
+
+    val getStatusInfus = useCase.getStatusInfus()
 }

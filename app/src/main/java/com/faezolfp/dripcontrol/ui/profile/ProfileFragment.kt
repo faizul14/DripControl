@@ -2,6 +2,7 @@ package com.faezolfp.dripcontrol.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,14 @@ class ProfileFragment : Fragment() {
     private fun displayObserver() {
         viewModel.idUser.observe(this){data->
             idUserFromObserver = data
+            if (data != 0 || data != null){
+                viewModel.getUsernameById(data).observe(this){data->
+                    Log.d("TRACKING", "data ${data.toString()}")
+                    binding.apply {
+                        textView5.setText(data.toString())
+                    }
+                }
+            }
         }
     }
 

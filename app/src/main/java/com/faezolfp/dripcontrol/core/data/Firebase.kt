@@ -3,14 +3,11 @@ package com.faezolfp.dripcontrol.core.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 class Firebase {
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("DripControl")
+    private val database: DatabaseReference =
+        FirebaseDatabase.getInstance().getReference("DripControl")
 
     fun setTpm(data: Int) {
         database.child("TPM").setValue(data).addOnSuccessListener {
@@ -85,6 +82,30 @@ class Firebase {
 
         database.addValueEventListener(listener)
 
+        return result
+    }
+
+    fun setStatusInfus(data: String) {
+        database.child("StatusInfus").setValue(data).addOnSuccessListener {
+        }.addOnFailureListener {
+            Log.d("RESULTFIREBASE", it.toString())
+        }
+    }
+
+    fun getStatusInfus(): LiveData<String> {
+        val result = MutableLiveData<String>()
+
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val data = snapshot.child("StatusInfus").value
+                result.value = data.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("RESULTFIREBASE", error.toString())
+            }
+        }
+        database.addValueEventListener(listener)
         return result
     }
 
