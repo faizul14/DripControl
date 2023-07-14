@@ -106,6 +106,12 @@ class Repository(
         }
     }
 
+    override fun deletePasien(pasiens: Pasiens) {
+        executorService.execute{
+            userDao.deletePasien(DataMapper.dataMapFromModelToPasienEntity(pasiens))
+        }
+    }
+
     override fun getListPasiens(kamar: Int): LiveData<List<Pasiens>> {
         return userDao.getListPasien(kamar).map {
             DataMapper.dataMapFromListPasienEntityToListPasienModel(it)

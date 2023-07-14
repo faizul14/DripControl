@@ -26,6 +26,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addPasien(pasienEntity: PasienEntity)
 
+    @Delete
+    fun deletePasien(pasienEntity: PasienEntity)
+
     @Query("SELECT * FROM PasienEntity WHERE kamar = :kamar")
     fun getListPasien(kamar: Int): LiveData<List<PasienEntity>>
 
