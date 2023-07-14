@@ -9,6 +9,7 @@ import com.faezolfp.dripcontrol.R
 import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityEditProfileBinding
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityEditProfileBinding
@@ -42,6 +43,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
     private fun setDisplay() {
         binding.btnBack.setOnClickListener(this)
         binding.btnEdit.setOnClickListener(this)
+
     }
 
     override fun onClick(p0: View?) {
@@ -68,6 +70,7 @@ class EditProfileActivity : AppCompatActivity(), View.OnClickListener {
                 )
 
                 viewModel.update(data)
+                FancyToast.makeText(this, "Berhasil memperbarui data!!", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show()
                 finish()
             }
         }

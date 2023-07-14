@@ -2,6 +2,7 @@ package com.faezolfp.dripcontrol.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.FragmentProfileBinding
 import com.faezolfp.dripcontrol.presentation.editprofile.EditProfileActivity
 import com.faezolfp.dripcontrol.presentation.login.LoginActivity
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class ProfileFragment : Fragment() {
     private lateinit var _binding: FragmentProfileBinding
@@ -40,6 +42,14 @@ class ProfileFragment : Fragment() {
     private fun displayObserver() {
         viewModel.idUser.observe(this){data->
             idUserFromObserver = data
+            if (data != 0 || data != null){
+                viewModel.getUsernameById(data).observe(this){data->
+                    Log.d("TRACKING", "data ${data.toString()}")
+                    binding.apply {
+                        textView5.setText(data.toString())
+                    }
+                }
+            }
         }
     }
 

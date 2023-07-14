@@ -93,7 +93,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/custom_input"
-        android:hint="Nip/Nik"
+        android:hint="NIP/NIK"
         android:fontFamily="@font/robot_regular"
         android:textSize="14sp"
         android:paddingStart="16dp"

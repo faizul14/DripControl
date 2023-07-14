@@ -78,7 +78,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/img_splashscreen"
         android:fontFamily="@font/robot_regular"
-        android:hint="Enter your fulname"
+        android:hint="Enter your fullname"
         android:padding="16dp"
         android:paddingLeft="50dp"
         android:textColorHint="#8F8F8F"

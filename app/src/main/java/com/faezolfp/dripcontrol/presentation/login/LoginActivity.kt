@@ -1,11 +1,15 @@
 package com.faezolfp.dripcontrol.presentation.login
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +19,7 @@ import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityLoginBinding
 import com.faezolfp.dripcontrol.presentation.register.RegisterActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.shashank.sony.fancytoastlib.FancyToast
 import io.reactivex.Observable
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -97,18 +102,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         if (email != null && password != null) {
             viewModel.login(email!!, password!!).observe(this) { data ->
                 if (data != 0 && data != null) {
-                    Toast.makeText(this, "Login Berhasil $data", Toast.LENGTH_SHORT).show()
+                    FancyToast.makeText(this, "Login Berhasil!",FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show()
                     viewModel.saveIdUser(data.toInt())
                     viewModel.login()
                     startActivity(Intent(this, MainActivity2::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "Email atau Password Masih Salah!!", Toast.LENGTH_SHORT)
-                        .show()
+                    FancyToast.makeText(this, "Email atau Password Masih Salah!!",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show()
+
                 }
             }
         } else {
-            Toast.makeText(this, "Email atau Password Masih Kosong!!", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(this, "Email atau Password Kosong!!",FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show()
         }
     }
 

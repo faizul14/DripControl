@@ -3,7 +3,6 @@ package com.faezolfp.dripcontrol.presentation.register
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +11,7 @@ import com.faezolfp.dripcontrol.core.domain.model.Users
 import com.faezolfp.dripcontrol.core.utils.ViewModelFactory
 import com.faezolfp.dripcontrol.databinding.ActivityRegisterBinding
 import com.jakewharton.rxbinding2.widget.RxTextView
+import com.shashank.sony.fancytoastlib.FancyToast
 import io.reactivex.Observable
 import io.reactivex.functions.Function3
 
@@ -106,10 +106,17 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 username = username, fullname = fulname, email = email, pasword = password
             )
             viewModel.register(data)
-            Toast.makeText(this, "Register Berhasil!!", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(
+                this, "Register Berhasil!",
+                FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false
+            ).show()
             finish()
         } else {
-            Toast.makeText(this, "Register Gagal!", Toast.LENGTH_SHORT).show()
+            FancyToast.makeText(
+                this, "Register Gagal!",
+                FancyToast.LENGTH_LONG, FancyToast.ERROR, false
+            ).show()
+
         }
     }
 

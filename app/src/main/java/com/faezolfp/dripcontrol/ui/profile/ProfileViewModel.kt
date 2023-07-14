@@ -20,4 +20,6 @@ class ProfileViewModel(private val useCase: UseCase) : ViewModel() {
 
     val idUser = useCase.isIDUser()
 
+    fun getUsernameById(UserId: Int) = useCase.getUsernameById(UserId)
+
 }

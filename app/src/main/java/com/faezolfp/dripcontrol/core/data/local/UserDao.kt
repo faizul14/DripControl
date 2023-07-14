@@ -23,4 +23,18 @@ interface UserDao {
     @Query("SELECT * FROM UserEntity WHERE id = :idUser")
     fun getUserById(idUser: Int): LiveData<UserEntity>
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun addPasien(pasienEntity: PasienEntity)
+
+    @Delete
+    fun deletePasien(pasienEntity: PasienEntity)
+
+    @Query("SELECT * FROM PasienEntity WHERE kamar = :kamar")
+    fun getListPasien(kamar: Int): LiveData<List<PasienEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun saveNotifikasi(notifikasiEntity: NotifikasiEntity)
+    @Query("SELECT * FROM NotifikasiEntity")
+    fun getNotifikasi(): LiveData<List<NotifikasiEntity>>
+
 }
