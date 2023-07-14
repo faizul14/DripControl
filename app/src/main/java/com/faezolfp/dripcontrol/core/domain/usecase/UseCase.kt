@@ -23,6 +23,7 @@ interface UseCase {
     fun loginUser(email: String, password: String): LiveData<Int>
     fun getUsernameById(UserId: Int): LiveData<String>
     fun addPasien(pasiens: Pasiens)
+    fun deletePasien(pasiens: Pasiens)
     fun getListPasiens(kamar: Int): LiveData<List<Pasiens>>
     fun saveNotifikasi(notifikasi: Notifikasi)
     fun getNotifikasi(): LiveData<List<Notifikasi>>

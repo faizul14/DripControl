@@ -10,9 +10,10 @@ import com.faezolfp.dripcontrol.core.domain.model.Pasiens
 import com.faezolfp.dripcontrol.databinding.ItemListBinding
 import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 
-class ListPasienAdapter() : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
+class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
 
     private val listPasiens = ArrayList<Pasiens>()
+
     fun setDataPasien(data: List<Pasiens>) {
         listPasiens.clear()
         listPasiens.addAll(data)
@@ -65,5 +66,46 @@ class ListPasienAdapter() : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(listPasiens[position])
+    }
+
+    private var onSwipeListener: OnSwipeListener? = null
+
+    fun setOnSwipeListener(listener: OnSwipeListener) {
+        this.onSwipeListener = listener
+    }
+
+    interface OnSwipeListener {
+        fun onSwipe(position: Int, data: Pasiens)
+    }
+
+    inner class SwipeCallback :
+        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.adapterPosition
+            val data = listPasiens[position]
+            onSwipeListener?.onSwipe(position, data)
+            notifyItemRemoved(position)
+        }
+    }
+
+    fun deleteItem(position: Int) {
+        listPasiens.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+
+    private val itemTouchHelper = ItemTouchHelper(SwipeCallback())
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 }

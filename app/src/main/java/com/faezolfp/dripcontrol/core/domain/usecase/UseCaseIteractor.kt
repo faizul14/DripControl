@@ -75,6 +75,10 @@ class UseCaseIteractor(private val repository: IRepository) : UseCase {
         repository.addPasien(pasiens)
     }
 
+    override fun deletePasien(pasiens: Pasiens) {
+        repository.deletePasien(pasiens)
+    }
+
     override fun getListPasiens(kamar: Int): LiveData<List<Pasiens>> {
         return repository.getListPasiens(kamar)
     }
