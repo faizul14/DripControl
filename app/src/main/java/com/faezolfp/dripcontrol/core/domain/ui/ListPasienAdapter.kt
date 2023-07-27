@@ -13,6 +13,7 @@ import com.faezolfp.dripcontrol.presentation.tracking.TrackingScreenActivity
 class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
 
     private val listPasiens = ArrayList<Pasiens>()
+    private lateinit var dataInfus: String
 
     fun setDataPasien(data: List<Pasiens>) {
         listPasiens.clear()
@@ -20,22 +21,30 @@ class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun setDataInfusPasien(data: String) {
+        dataInfus = data
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Pasiens) {
+        fun bind(data: Pasiens, dataInfus: String) {
             var dataBB: String? = null
             when (data.kamar) {
                 1 -> {
                     dataBB = "B1"
                     binding.materialCardView.setCardBackgroundColor(itemView.resources.getColor(R.color.colorshape1))
                 }
+
                 2 -> {
                     dataBB = "B2"
                     binding.materialCardView.setCardBackgroundColor(itemView.resources.getColor(R.color.colorshape2))
                 }
+
                 3 -> {
                     dataBB = "B3"
                     binding.materialCardView.setCardBackgroundColor(itemView.resources.getColor(R.color.colorshape3))
                 }
+
                 else -> {
                     dataBB = "B4"
                     binding.materialCardView.setCardBackgroundColor(itemView.resources.getColor(R.color.colorshape4))
@@ -46,6 +55,7 @@ class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
                 txtUmur.text = "${data.umur} Tahun"
                 txtBeratbadan.text = "${data.brtbadan} KG"
                 txtBbb.text = dataBB
+                txtStatusinfus.text = "$dataInfus%"
             }
 
             itemView.setOnClickListener {
@@ -65,7 +75,7 @@ class ListPasienAdapter : RecyclerView.Adapter<ListPasienAdapter.ViewHolder>() {
     override fun getItemCount(): Int = listPasiens.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listPasiens[position])
+        holder.bind(listPasiens[position], dataInfus)
     }
 
     private var onSwipeListener: OnSwipeListener? = null
