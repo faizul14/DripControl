@@ -72,9 +72,15 @@ class HomeFragment : Fragment() {
             Log.d("TRACKING", "USERID ${UserId.toString()}")
             if (UserId != 0 || UserId != null){
                 viewModel.getUsernameById(UserId).observe(this){data->
-                    Log.d("TRACKING", "data ${data.toString()}")
-                    binding.apply {
-                        txtUsername.setText(data.toString())
+                    if (data!=null){
+                        Log.d("TRACKING", "data ${data.toString()}")
+                        binding.apply {
+                            txtUsername.setText(data.toString())
+                        }
+                    }else{
+                        binding.apply {
+                            txtUsername.setText("Loading...")
+                        }
                     }
                 }
             }

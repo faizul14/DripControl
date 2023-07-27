@@ -41,6 +41,9 @@ class ListPasienActivity : AppCompatActivity(), View.OnClickListener {
                 if (dataPasien.isNotEmpty()) {
                     adapter = ListPasienAdapter()
                     adapter.setDataPasien(dataPasien)
+                    viewModel.getDataInfus.observe(this){dataInfus->
+                        adapter.setDataInfusPasien(dataInfus.toString())
+                    }
                     binding.rvListpasien.adapter = adapter
                     binding.imgBlank.visibility = View.GONE
                     binding.rvListpasien.visibility = View.VISIBLE
@@ -67,7 +70,6 @@ class ListPasienActivity : AppCompatActivity(), View.OnClickListener {
                             snackbar.show()
                         }
                     })
-
 
                 } else {
                     binding.imgBlank.visibility = View.VISIBLE
