@@ -150,10 +150,10 @@ class TrackingScreenActivity : AppCompatActivity(), View.OnClickListener {
                         val persentase =
                             FormatPersentase.persentaseRealtime(datamax, dataInpusRealtime)
                         presentase = persentase
-                        if (persentase > 1){
+                        if (persentase > 10){
                             viewModel.setStatusInfus("LANCAR")
                         }else{
-                            viewModel.setStatusInfus("TERSUMBAT")
+                            viewModel.setStatusInfus("KOSONG")
                         }
                         binding.txtDtinfuspersen.text = "$persentase%"
                         if (persentase <= 20){
