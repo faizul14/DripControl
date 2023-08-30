@@ -21,7 +21,8 @@ class Firebase {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val dataInf = snapshot.child("TPM").value
-                result.value = dataInf.toString().toInt()
+                val intValue = dataInf.toString().toFloat()
+                result.value = intValue.toInt()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -46,7 +47,8 @@ class Firebase {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val dataInf = snapshot.child("VolumeInfus/CurrentVolume").value
-                result.value = dataInf.toString().toInt()
+                val infusValus = dataInf.toString().toInt()
+                result.value = if (infusValus > 0) infusValus else 0
             }
 
             override fun onCancelled(error: DatabaseError) {
